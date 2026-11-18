@@ -1,0 +1,9 @@
+# YAML
+nome: Esempio
+versione: 1.2
+elenco:
+  - uno
+  - due
+annidato:
+  chiave: valore
+  numero: 42

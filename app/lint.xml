@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <!-- Falso positivo: InitializationProvider arriva in modo transitivo (profileinstaller/lifecycle)
+         ed e' presente nel dex (verificato con apkanalyzer dex packages). Il nodo nel manifest serve
+         solo a TOGLIERE l'inizializzatore di EmojiCompat. -->
+    <issue id="MissingClass">
+        <ignore regexp="androidx.startup.InitializationProvider" />
+    </issue>
+</lint>

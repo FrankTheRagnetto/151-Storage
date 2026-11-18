@@ -1,0 +1,4 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="24dp" android:height="24dp" android:viewportWidth="24" android:viewportHeight="24" android:tint="?attr/colorControlNormal">
+    <!-- vista a griglia, 3 per riga -->
+    <path android:fillColor="@android:color/white" android:pathData="M3.00,3.00h4.67v8.00h-4.67zM9.67,3.00h4.67v8.00h-4.67zM16.33,3.00h4.67v8.00h-4.67zM3.00,13.00h4.67v8.00h-4.67zM9.67,13.00h4.67v8.00h-4.67zM16.33,13.00h4.67v8.00h-4.67z"/>
+</vector>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- visore di foto e video (spec §8): fondo nero, barre d'acetato che compaiono e spariscono al tocco -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/image_bg">
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/mPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:id="@+id/mTop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/mToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            app:titleTextAppearance="@style/TextAppearance.Viewer.Title" />
+
+        <View
+            android:id="@+id/mBand"
+            android:layout_width="match_parent"
+            android:layout_height="4dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/mBottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/acetate"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/seam" />
+
+        <LinearLayout
+            android:id="@+id/mActions"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:orientation="horizontal" />
+    </LinearLayout>
+</FrameLayout>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/board"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        android:background="@color/acetate"
+        app:titleTextAppearance="@style/TextAppearance.Viewer.Title"
+        app:subtitleTextAppearance="@style/TextAppearance.Viewer.Meta" />
+
+    <!-- la fascia della sezione: lo stesso colore della linguetta di questo tipo di documento -->
+    <View
+        android:id="@+id/sectionBand"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@color/hue_all" />
+
+    <LinearLayout
+        android:id="@+id/searchBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/acetate_raised"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingEnd="4dp"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/searchInput"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="@string/search_hint"
+            android:imeOptions="actionSearch|flagNoExtractUi"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.Viewer.Body" />
+
+        <TextView
+            android:id="@+id/searchCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="8dp"
+            android:textAppearance="@style/TextAppearance.Viewer.Meta"
+            android:textColor="@color/ink_muted" />
+
+        <ImageButton
+            android:id="@+id/searchPrev"
+            style="?attr/borderlessButtonStyle"
+            android:layout_width="44dp"
+            android:layout_height="48dp"
+            android:contentDescription="@string/search_prev"
+            android:src="@drawable/ic_up" />
+
+        <ImageButton
+            android:id="@+id/searchNext"
+            style="?attr/borderlessButtonStyle"
+            android:layout_width="44dp"
+            android:layout_height="48dp"
+            android:contentDescription="@string/search_next"
+            android:src="@drawable/ic_down" />
+
+        <ImageButton
+            android:id="@+id/searchClose"
+            style="?attr/borderlessButtonStyle"
+            android:layout_width="44dp"
+            android:layout_height="48dp"
+            android:contentDescription="@string/search_close"
+            android:src="@drawable/ic_close" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:visibility="gone" />
+    </FrameLayout>
+</LinearLayout>

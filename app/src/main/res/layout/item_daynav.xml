@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Random day / Today: in cima, una riga sola: ‹ 18 OCTOBER › -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:background="@drawable/row_bg"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingHorizontal="4dp">
+
+    <ImageButton
+        android:id="@+id/dayPrev"
+        style="@style/Storage.DayArrow"
+        android:contentDescription="@string/v_prev_day"
+        android:src="@drawable/ic_chevron_left" />
+
+    <TextView
+        android:id="@+id/dayName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.Viewer.Title"
+        android:textColor="@color/ink" />
+
+    <ImageButton
+        android:id="@+id/dayNext"
+        style="@style/Storage.DayArrow"
+        android:contentDescription="@string/v_next_day"
+        android:src="@drawable/ic_chevron_right" />
+</LinearLayout>

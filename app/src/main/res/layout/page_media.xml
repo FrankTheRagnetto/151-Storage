@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- il video, dentro la pagina (si accende col ▶) -->
+    <FrameLayout
+        android:id="@+id/pVideoHost"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <com.the151universe.storage.ZoomImageView
+        android:id="@+id/pImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:importantForAccessibility="no" />
+
+    <ProgressBar
+        android:id="@+id/pSpin"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:indeterminateTint="@color/seam_strong" />
+
+    <FrameLayout
+        android:id="@+id/pPlay"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_gravity="center"
+        android:background="@drawable/play_scrim"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/v_play"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_gravity="center"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_play"
+            android:tint="@color/on_scrim" />
+    </FrameLayout>
+
+    <!-- comandi del video (spec §8): tempo · barra · durata, sotto −10 ▶ +10 e schermo intero -->
+    <LinearLayout
+        android:id="@+id/pControls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="80dp"
+        android:background="@color/scrim_label"
+        android:orientation="vertical"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="6dp"
+        android:visibility="gone">
+
+        <!-- 48dp: la barra del tempo si prende col pollice senza mirare -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/pTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="44dp"
+                android:textAppearance="@style/TextAppearance.Viewer.Meta"
+                android:textColor="@color/on_scrim" />
+
+            <SeekBar
+                android:id="@+id/pSeek"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:progressBackgroundTint="@color/seam_strong"
+                android:progressTint="@color/on_scrim"
+                android:thumbTint="@color/on_scrim" />
+
+            <TextView
+                android:id="@+id/pDur"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:minWidth="44dp"
+                android:textAppearance="@style/TextAppearance.Viewer.Meta"
+                android:textColor="@color/on_scrim" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp">
+
+            <!-- −10 ▶ +10 al centro, in linea col ▶ grande; schermo intero da solo a destra -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <ImageButton android:id="@+id/pBack" style="@style/Storage.VideoButton" android:contentDescription="@string/v_back10" android:src="@drawable/ic_back10" />
+                <ImageButton android:id="@+id/pToggle" style="@style/Storage.VideoButton" android:contentDescription="@string/v_pause" android:src="@drawable/ic_pause" />
+                <ImageButton android:id="@+id/pFwd" style="@style/Storage.VideoButton" android:contentDescription="@string/v_fwd10" android:src="@drawable/ic_fwd10" />
+            </LinearLayout>
+
+            <ImageButton android:id="@+id/pFull" style="@style/Storage.VideoButton" android:layout_gravity="end|center_vertical" android:contentDescription="@string/v_full" android:src="@drawable/ic_fullscreen" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/pError"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="24dp"
+        android:background="@drawable/slip_errata"
+        android:padding="22dp"
+        android:textAppearance="@style/TextAppearance.Viewer.Prose"
+        android:textColor="@color/ink"
+        android:visibility="gone" />
+</FrameLayout>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Solo per i file della libreria (storage condiviso, /storage/...): URI content:// da passare al
+     visualizzatore e, con permesso temporaneo, alle altre app (Condividi / Apri con). -->
+<paths>
+    <root-path name="storage" path="storage/" />
+    <!-- 151 Storage: i file scaricati dal cloud per aprirli (cache dell'app) -->
+    <cache-path name="cloud" path="cloud/" />
+    <!-- «sempre sul telefono»: la copia privata delle cartelle del cloud (memoria dell'app, invisibile alle altre app) -->
+    <files-path name="offline" path="offline/" />
+</paths>

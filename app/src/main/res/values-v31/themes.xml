@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Android 12+ mostra sempre uno "splash" di sistema: lo rendiamo invisibile (niente icona, durata zero). -->
+    <style name="Theme.Viewer" parent="Theme.Viewer.Base">
+        <item name="android:windowSplashScreenAnimatedIcon">@android:color/transparent</item>
+        <item name="android:windowSplashScreenAnimationDuration">0</item>
+        <item name="android:windowSplashScreenBackground">@color/board</item>
+    </style>
+</resources>

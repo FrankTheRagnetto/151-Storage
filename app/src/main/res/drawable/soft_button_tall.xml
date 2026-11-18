@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- il bottone della riga del conteggio con la sua aria intorno: si vede alto 34dp come prima, ma si tocca
+     su 48dp (DESIGN.md: bersagli ≥ 48dp). Stati (premuto) quelli di soft_button. -->
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/soft_button"
+    android:insetTop="7dp"
+    android:insetBottom="7dp" />

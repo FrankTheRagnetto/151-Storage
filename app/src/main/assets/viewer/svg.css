@@ -1,0 +1,7 @@
+html, body { margin: 0; height: 100%; background: #f4f4f6; }
+.theme-dark, .theme-dark body { background: #2a2a30; }
+body { display: flex; align-items: center; justify-content: center; }
+/* <img>: gli script dentro l'SVG NON girano mai */
+#img { width: 100vw; height: 100vh; object-fit: contain; background:
+  repeating-conic-gradient(#fff 0 25%, #e6e6ea 0 50%) 0 0 / 16px 16px; }
+.theme-dark #img { background: repeating-conic-gradient(#3a3a42 0 25%, #33333a 0 50%) 0 0 / 16px 16px; }

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- foglietto di errata: l'unico posto dove compare il vermiglio -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/vermilion_wash" />
+    <stroke android:width="1dp" android:color="@color/vermilion" />
+    <corners android:radius="6dp" />
+</shape>

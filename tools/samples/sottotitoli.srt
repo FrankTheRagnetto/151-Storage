@@ -1,0 +1,12 @@
+1
+00:00:01,000 --> 00:00:03,500
+Ciao, questa è una prova.
+
+2
+00:00:04,000 --> 00:00:06,000
+Seconda riga
+su due righe.
+
+3
+00:01:10,250 --> 00:01:12,000
+<i>Corsivo</i> finale.

@@ -1,0 +1,136 @@
+{
+ "type": "excalidraw",
+ "version": 2,
+ "source": "https://excalidraw.com",
+ "elements": [
+  {
+   "id": "r",
+   "type": "rectangle",
+   "x": 0,
+   "y": 0,
+   "width": 220,
+   "height": 110,
+   "angle": 0,
+   "strokeColor": "#1e1e1e",
+   "backgroundColor": "#a5d8ff",
+   "fillStyle": "hachure",
+   "strokeWidth": 2,
+   "strokeStyle": "solid",
+   "opacity": 100,
+   "roundness": {
+    "type": 3
+   },
+   "isDeleted": false
+  },
+  {
+   "id": "t",
+   "type": "text",
+   "x": 30,
+   "y": 35,
+   "width": 160,
+   "height": 25,
+   "angle": 0,
+   "strokeColor": "#1e1e1e",
+   "backgroundColor": "transparent",
+   "text": "Idea di prova",
+   "fontSize": 24,
+   "fontFamily": 1,
+   "textAlign": "left",
+   "opacity": 100,
+   "isDeleted": false
+  },
+  {
+   "id": "e",
+   "type": "ellipse",
+   "x": 320,
+   "y": 10,
+   "width": 140,
+   "height": 90,
+   "angle": 0,
+   "strokeColor": "#e03131",
+   "backgroundColor": "#ffc9c9",
+   "fillStyle": "solid",
+   "strokeWidth": 2,
+   "opacity": 100,
+   "isDeleted": false
+  },
+  {
+   "id": "a",
+   "type": "arrow",
+   "x": 225,
+   "y": 55,
+   "width": 90,
+   "height": 0,
+   "angle": 0,
+   "strokeColor": "#1e1e1e",
+   "backgroundColor": "transparent",
+   "strokeWidth": 2,
+   "points": [
+    [
+     0,
+     0
+    ],
+    [
+     90,
+     0
+    ]
+   ],
+   "endArrowhead": "arrow",
+   "opacity": 100,
+   "isDeleted": false
+  },
+  {
+   "id": "f",
+   "type": "freedraw",
+   "x": 40,
+   "y": 150,
+   "width": 200,
+   "height": 40,
+   "angle": 0,
+   "strokeColor": "#2f9e44",
+   "backgroundColor": "transparent",
+   "strokeWidth": 2,
+   "points": [
+    [
+     0,
+     0
+    ],
+    [
+     40,
+     30
+    ],
+    [
+     80,
+     5
+    ],
+    [
+     120,
+     35
+    ],
+    [
+     160,
+     0
+    ],
+    [
+     200,
+     25
+    ]
+   ],
+   "opacity": 100,
+   "isDeleted": false
+  },
+  {
+   "id": "x",
+   "type": "rectangle",
+   "x": 900,
+   "y": 900,
+   "width": 10,
+   "height": 10,
+   "isDeleted": true
+  }
+ ],
+ "appState": {
+  "viewBackgroundColor": "#ffffff"
+ },
+ "files": {}
+}

@@ -1,0 +1,27 @@
+# build
+.gradle/
+/build/
+/app/build/
+local.properties
+*.iml
+.idea/
+.kotlin/
+# firma: il keystore NON si versiona e NON si cancella mai (vedi README)
+.signing/
+# prove locali
+tools/web-test/out/
+tools/emu-test/out/
+# PDF da 100 MB per la prova "file grande": si rigenera, non si versiona
+tools/emu-test/fixtures/grande.pdf
+# app di prova FintoChat (tools/emu-test/sender): build fuori da git
+tools/emu-test/sender/.gradle/
+tools/emu-test/sender/app/build/
+tools/emu-test/sender/build/
+tools/emu-test/sender/local.properties
+tools/samples-real/
+# rete di sicurezza: chiavi e config locali ovunque nel repo
+*.jks
+*.keystore
+keystore.properties
+google-services.json
+__pycache__/

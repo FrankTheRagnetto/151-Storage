@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" id="vp" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data:; font-src 'self' blob: data:; media-src 'self' blob: data:; frame-src 'none'; worker-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Document</title>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="doc.css">
+</head>
+<body>
+<!--
+THESIS: la libreria è un manuale aperto alla sezione giusta: ogni tipo di documento è una linguetta colorata, la sezione scelta diventa la lastra su cui appoggia il foglio d'acetato coi file; rifiuta l'elenco Material bianco a bollini casuali.
+OWN-WORLD: lastra di cartone (di notte inchiostro), acetato latte, tinte di sezione piene (ossido, oltremare, prato, rosa, viola, ottanio, cielo, Siena, giallo cromo, ardesia, muschio); vermiglio solo per gli errori; Archivo dice, Garamond spiega, Mono misura; angoli 4-6 dp, linee da 1 dp, nessuna ombra morbida.
+STORY: apre, vede quanti documenti ha per tipo, tocca una linguetta, trova il file e lo apre; il visualizzatore porta la fascia della stessa sezione; se non si apre, un foglietto dice perché e cosa fare.
+FIRST VIEWPORT: «151 Viewer»; Documenti | Recenti; ricerca; fila di linguette; lastra della sezione con la riga mono del conteggio e il foglio d'acetato con le righe; «Apri un file» giallo cromo in basso a destra.
+FORM: sfidante «manuale a linguette» fuso coi fatti, preferito al candidato 7 assegnato; seed 6ae53851.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+Vale per tutta l'app: le schermate native lo portano in res/layout/activity_main.xml.
+-->
+<div id="note" hidden></div>
+<div id="back" hidden><button type="button" id="backBtn">‹ Back to list</button><span id="backName"></span></div>
+<main id="doc" aria-live="polite"><div class="loading">Opening document…</div></main>
+<script type="module" src="doc.mjs"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/search" android:title="@string/search" android:icon="@drawable/ic_search"
+        app:actionViewClass="androidx.appcompat.widget.SearchView" app:showAsAction="ifRoom|collapseActionView" />
+    <item android:id="@+id/cl_new" android:title="@string/new_folder" android:icon="@drawable/ic_new_folder" app:showAsAction="never" />
+    <item android:id="@+id/cl_trash" android:title="@string/cloud_trash" app:showAsAction="never" />
+    <item android:id="@+id/cl_list" android:title="@string/cloud_list" app:showAsAction="never" />
+    <item android:id="@+id/cl_refresh" android:title="@string/rescan" app:showAsAction="never" />
+    <item android:id="@+id/cl_account" android:title="@string/cloud_account" app:showAsAction="never" />
+    <item android:id="@+id/cl_disconnect" android:title="@string/cloud_disconnect" app:showAsAction="never" />
+    <item android:id="@+id/action_settings" android:title="@string/settings" app:showAsAction="never" />
+</menu>

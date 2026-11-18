@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/cl_account" android:title="@string/cloud_account" />
+    <item android:id="@+id/cl_disconnect" android:title="@string/cloud_disconnect" />
+</menu>

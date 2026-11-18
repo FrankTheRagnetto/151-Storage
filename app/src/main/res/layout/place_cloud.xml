@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Cloud (spec §9): lastra cielo. Tre stati: foglietto «Collega il tuo cloud», Proton Drive (passa dalla sua app), sfoglia. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/placeCloud"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/place_cloud"
+    android:visibility="gone">
+
+    <!-- sfoglia -->
+    <LinearLayout
+        android:id="@+id/clBrowse"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <HorizontalScrollView
+            android:id="@+id/clCrumbStrip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fadingEdgeLength="28dp"
+            android:requiresFadingEdge="horizontal"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/clCrumbs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:orientation="horizontal"
+                android:paddingHorizontal="8dp" />
+        </HorizontalScrollView>
+
+        <!-- Le funzioni del cloud in riga, distinte dalle cartelle: solo alla radice -->
+        <HorizontalScrollView
+            android:id="@+id/clFnStrip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="4dp"
+            android:fadingEdgeLength="28dp"
+            android:requiresFadingEdge="horizontal"
+            android:scrollbars="none"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:id="@+id/clFns"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="8dp" />
+        </HorizontalScrollView>
+
+        <LinearLayout
+            android:id="@+id/clBoard"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingHorizontal="8dp">
+
+            <TextView
+                android:id="@+id/clStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="9dp"
+                android:singleLine="true"
+                android:textAppearance="@style/TextAppearance.Viewer.Meta" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/panel_leaf">
+
+                <!-- tirare in giù = rileggere la cartella dal cloud, come «Refresh» nel menu -->
+                <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                    android:id="@+id/clPull"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/clList"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="96dp"
+                    android:scrollbarStyle="outsideOverlay"
+                    android:scrollbars="vertical" />
+                </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+                <ProgressBar
+                    android:id="@+id/clSpin"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/clEmpty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="32dp"
+                    android:text="@string/folder_empty"
+                    android:textAppearance="@style/TextAppearance.Viewer.Prose"
+                    android:textColor="@color/ink_muted"
+                    android:visibility="gone" />
+            </FrameLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- foglietti: collega, Proton, errore (uno alla volta) -->
+    <ScrollView
+        android:id="@+id/clSlipScroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:visibility="gone">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="24dp">
+
+            <LinearLayout
+                android:id="@+id/clSlip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/slip"
+                android:orientation="vertical"
+                android:paddingHorizontal="22dp"
+                android:paddingTop="24dp"
+                android:paddingBottom="22dp">
+
+                <FrameLayout
+                    android:id="@+id/clSlipBadge"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp">
+
+                    <ImageView
+                        android:id="@+id/clSlipIcon"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_gravity="center"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_cloud" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/clSlipTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:breakStrategy="balanced"
+                    android:textAppearance="@style/TextAppearance.Viewer.Headline"
+                    android:textColor="@color/ink" />
+
+                <TextView
+                    android:id="@+id/clSlipAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:textAppearance="@style/TextAppearance.Viewer.Meta"
+                    android:textColor="@color/ink_muted"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/clSlipBody"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textAppearance="@style/TextAppearance.Viewer.Prose"
+                    android:textColor="@color/ink" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="18dp"
+                    android:background="@color/seam" />
+
+                <!-- le due scelte -->
+                <LinearLayout
+                    android:id="@+id/clChoices"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/clChooseDav"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/slip_choice"
+                        android:minHeight="72dp"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="16dp"
+                        android:paddingVertical="12dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/cloud_choice_dav"
+                            android:textAppearance="@style/TextAppearance.Viewer.Body"
+                            android:textColor="@color/ink" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:text="@string/cloud_choice_dav_meta"
+                            android:textAppearance="@style/TextAppearance.Viewer.Meta"
+                            android:textColor="@color/ink_muted" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/clChooseProton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/slip_choice"
+                        android:minHeight="72dp"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="16dp"
+                        android:paddingVertical="12dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/cloud_choice_proton"
+                            android:textAppearance="@style/TextAppearance.Viewer.Body"
+                            android:textColor="@color/ink" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:text="@string/cloud_choice_proton_meta"
+                            android:textAppearance="@style/TextAppearance.Viewer.Meta"
+                            android:textColor="@color/ink_muted" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- il modulo WebDAV -->
+                <LinearLayout
+                    android:id="@+id/clForm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView style="@style/Storage.FieldLabel" android:text="@string/cloud_url" />
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:hintEnabled="false">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/clUrl"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/cloud_url_hint"
+                            android:inputType="textUri"
+                            android:maxLines="1"
+                            android:minHeight="48dp"
+                            android:textAppearance="@style/TextAppearance.Viewer.Body" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView style="@style/Storage.FieldLabel" android:text="@string/cloud_user" />
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:hintEnabled="false">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/clUser"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/cloud_user_hint"
+                            android:inputType="text|textNoSuggestions"
+                            android:maxLines="1"
+                            android:minHeight="48dp"
+                            android:textAppearance="@style/TextAppearance.Viewer.Body" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView style="@style/Storage.FieldLabel" android:text="@string/cloud_password" />
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:endIconMode="password_toggle"
+                        app:hintEnabled="false">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/clPass"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPassword"
+                            android:maxLines="1"
+                            android:minHeight="48dp"
+                            android:textAppearance="@style/TextAppearance.Viewer.Body" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/clPrimary"
+                    style="?attr/materialButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="22dp"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/clSecondary"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </FrameLayout>
+    </ScrollView>
+</FrameLayout>

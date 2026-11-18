@@ -1,0 +1,5 @@
+2026-09-30 10:00:01 INFO  avvio servizio
+2026-09-30 10:00:02 DEBUG config letta da /etc/app.conf
+2026-09-30 10:00:05 WARN  disco quasi pieno (91%)
+2026-09-30 10:00:09 ERROR connessione rifiutata: timeout
+2026-09-30 10:00:10 INFO  nuovo tentativo

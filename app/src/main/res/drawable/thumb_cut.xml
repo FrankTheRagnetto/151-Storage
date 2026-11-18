@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- miniatura nelle righe (spec §6): angoli tagliati da 4dp, fondo sunk mentre arriva -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/acetate_sunk" />
+    <corners android:radius="4dp" />
+</shape>

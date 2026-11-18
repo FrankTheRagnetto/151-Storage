@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 151 Storage (nato dal 151 Viewer) — «il manuale con le linguette». Fonte unica dei colori nativi; DESIGN.md li descrive.
+     Neutri: lastra di cartone (board), foglio di acetato latte (acetate), inchiostro (ink).
+     Tinte di sezione: una per tipo di documento, piene, sempre uguali fra chiaro e scuro.
+     Il vermiglio è tenuto fuori dalle sezioni: è solo per gli errori (il foglietto di errata). -->
+<resources>
+    <!-- neutri, tema chiaro -->
+    <color name="board">#DAD2BF</color>
+    <color name="acetate">#F5F1E6</color>
+    <color name="acetate_leaf">#E8F5F1E6</color>
+    <color name="acetate_raised">#FBF9F3</color>
+    <color name="acetate_sunk">#EAE4D5</color>
+    <color name="ink">#1C1B18</color>
+    <color name="ink_muted">#5C574C</color>
+    <color name="row_selected">#1A1C1B18</color>
+    <color name="seam">#CEC6B2</color>
+    <color name="seam_strong">#8E8676</color>
+    <color name="vermilion">#C4321B</color>
+    <color name="vermilion_wash">#F8E4DC</color>
+    <color name="on_hue_dark">#1C1B18</color>
+    <color name="on_hue_light">#FBF8EF</color>
+
+    <!-- tinte di sezione (Library.Cat) -->
+    <color name="hue_all">#DAD2BF</color>
+    <color name="hue_pdf">#DB5A1F</color>
+    <color name="hue_word">#2B4AAE</color>
+    <color name="hue_excel">#3B8A37</color>
+    <color name="hue_ppt">#BF3E67</color>
+    <color name="hue_text">#6A3FBD</color>
+    <color name="hue_archive">#EBB21D</color>
+    <color name="hue_other">#676A6F</color>
+    <color name="hue_audio">#6C7D1C</color>
+
+    <!-- 151 Storage: i quattro posti (design/storage-spec.md §1). Documenti non ha una tinta sua: prende la sezione. -->
+    <color name="place_photo">#117870</color>
+    <color name="place_folder">#B08550</color>
+    <color name="place_cloud">#3E8FD1</color>
+    <color name="scrim_label">#991C1B18</color>
+    <!-- testo e icone sopra un velo scuro (durata dei video, comandi del video): chiaro di giorno E di notte, per questo
+         non c'è in values-night. Prima era #F5F1E6 scritto a mano in cinque file -->
+    <color name="on_scrim">#F5F1E6</color>
+
+    <!-- icona -->
+    <color name="image_bg">#000000</color>
+    <!-- i bottoni della riga del conteggio: un velo d'inchiostro, più scuro sotto il dito -->
+    <color name="soft_button">#141C1B18</color>
+    <color name="soft_button_pressed">#381C1B18</color>
+    <color name="soft_button_edge">#291C1B18</color>
+    <!-- Documenti: un colore suo, fisso — la cartellina manila; le categorie colorano il foglio sotto -->
+    <color name="place_docs">#C9A46E</color> <!-- manila più chiaro di Phone -->
+</resources>

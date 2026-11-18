@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Editor di prova
+Comment=Un editor inventato
+Exec=editor %F
+Icon=editor
+Categories=Utility;TextEditor;

@@ -1,0 +1,9 @@
+diff --git a/app.py b/app.py
+--- a/app.py
++++ b/app.py
+@@ -1,4 +1,4 @@
+ def saluta(nome):
+-    print("Ciao " + nome)
++    print(f"Ciao {nome}!")
+
+ saluta("mondo")

@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  151 Storage (nata dal 151 Viewer). INTERNET serve SOLO al Cloud (OkHttp, WebDAV): le pagine dei documenti
+  restano senza rete come nel Viewer (shouldInterceptRequest + CSP in ViewerActivity), niente pubblicita' ne' analytics.
+  Notifiche + servizio in primo piano «dataSync» + WAKE_LOCK: solo per i caricamenti verso il cloud.
+  Dal 151 Viewer:
+  v4: l'UNICO permesso e' lo storage («Accesso a tutti i file» da Android 11, i permessi classici
+  su Android 8-10), e serve solo alla libreria «Documenti» e a «Elimina». Senza, l'app funziona
+  come prima: i file arrivano come URI concessi da chi li apre (Apri con / Condividi) o dal
+  selettore di sistema. App installata a mano (non Play Store): MANAGE_EXTERNAL_STORAGE e' ammesso.
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!-- cartelle collegate: il giro ogni 15 minuti riparte anche dopo il riavvio del telefono -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- il giro aspetta la rete: Android lo esige per un lavoro con la rete come condizione -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="29" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="29" />
+    <!-- androidx.core aggiunge da sé un permesso interno per i receiver: l'app non ne registra, via (regola /apps) -->
+    <permission android:name="${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" tools:node="remove" />
+    <uses-permission android:name="${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" tools:node="remove" />
+
+    <!-- Android 11+: senza questa dichiarazione queryIntentActivities non vede le altre app, e non
+         sapremmo se mostrare «Apri con un'altra app». Non e' un permesso e non da' accesso a nulla. -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="content" android:mimeType="*/*" />
+        </intent>
+        <!-- l'icona delle cartelle collegate sceglie fra le app con un'icona -->
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent>
+    </queries>
+
+    <application
+        android:name=".App"
+        android:allowBackup="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="false"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Viewer"
+        android:usesCleartextTraffic="false"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:localeConfig="@xml/locales_config"
+        android:requestLegacyExternalStorage="true"
+        tools:targetApi="36">
+
+        <!-- WebView: niente Safe Browsing (andrebbe in rete) e niente metriche verso Google -->
+        <meta-data android:name="android.webkit.WebView.EnableSafeBrowsing" android:value="false" />
+        <meta-data android:name="android.webkit.WebView.MetricsOptOut" android:value="true" />
+
+        <!-- EmojiCompat non serve (niente testo emoji nativo da scaricare): meno lavoro all'avvio -->
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <meta-data android:name="androidx.emoji2.text.EmojiCompatInitializer" tools:node="remove" />
+        </provider>
+
+        <!-- v4: URI content:// per i file della libreria (visualizzatore, Condividi, Apri con).
+             Non esportato: altre app leggono SOLO l'URI che passiamo noi, con permesso temporaneo. -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.files"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths" />
+        </provider>
+
+        <!-- Icona dell'app: documenti + recenti + "Apri un file" -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Impostazioni: posti, tipi di Docs e album da mostrare o nascondere -->
+        <activity android:name=".SettingsActivity" android:exported="false" />
+
+        <!-- 151 Storage: foto e video («Apri con» da altre app, e dal nostro rullino) -->
+        <activity
+            android:name=".MediaActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Viewer.Media"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="content" />
+                <data android:scheme="file" />
+                <data android:mimeType="image/jpeg" />
+                <data android:mimeType="image/png" />
+                <data android:mimeType="image/webp" />
+                <data android:mimeType="image/gif" />
+                <data android:mimeType="image/heic" />
+                <data android:mimeType="image/heif" />
+                <data android:mimeType="image/bmp" />
+                <data android:mimeType="video/*" />
+            </intent-filter>
+        </activity>
+
+
+        <service
+            android:name=".UploadService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+
+        <!-- «Keep on phone»: scarica anche fuori dall'app (0.9.12) -->
+        <service
+            android:name=".OfflineService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+
+        <!-- Cartelle collegate: l'icona che apre un'app e intanto prende le novità -->
+        <activity
+            android:name=".LinkLaunch"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:taskAffinity=""
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <!-- Cartelle collegate: i giri -->
+        <service
+            android:name=".LinkJob"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <!-- Il giro delle anteprime di tutto il cloud (0.9.0) -->
+        <service
+            android:name=".ThumbService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+
+        <!-- Il visualizzatore: risponde ad "Apri con" e "Condividi" -->
+        <activity
+            android:name=".ViewerActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboard|keyboardHidden|navigation"
+            android:windowSoftInputMode="adjustResize">
+
+            <!-- PDF -->
+            <intent-filter android:label="@string/app_name">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="content" />
+                <data android:scheme="file" />
+                <data android:mimeType="application/pdf" />
+                <!-- MIME "sbagliati" ma reali per i PDF (vecchie app, allegati mail, WhatsApp) -->
+                <data android:mimeType="application/x-pdf" />
+                <data android:mimeType="application/acrobat" />
+                <data android:mimeType="application/vnd.pdf" />
+                <data android:mimeType="text/pdf" />
+            </intent-filter>
+
+            <!-- v5: NIENTE image/* e video/* (decisione dell'utente: le foto e i video restano alla Galleria;
+                 151 Viewer e' per "tutti gli altri file"). Delle immagini restano solo i "documenti-immagine"
+                 che non sono foto: SVG, TIFF (scansioni, fax), PSD, EPS/PostScript/Illustrator. -->
+
+            <!-- Testo / codice / dati -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="content" />
+                <data android:scheme="file" />
+                <data android:mimeType="text/*" />
+                <data android:mimeType="application/json" />
+                <data android:mimeType="application/xml" />
+            </intent-filter>
+
+            <!-- File "senza tipo" o con tipo generico (spesso documenti arrivati da chat e mail) e documenti
+                 Office: 151 Viewer deve comparire nella scelta. Priorita' 0 (quella di default) apposta: vedi
+                 il ripiego qui sotto. Se dentro c'e' una foto, la schermata dice «non è un documento». -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="content" />
+                <data android:scheme="file" />
+                <data android:mimeType="application/octet-stream" />
+                <data android:mimeType="application/binary" />
+                <data android:mimeType="application/unknown" />
+                <data android:mimeType="application/force-download" />
+                <data android:mimeType="application/download" />
+                <data android:mimeType="application/msword" />
+                <data android:mimeType="application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
+                <data android:mimeType="application/vnd.ms-excel" />
+                <data android:mimeType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+                <data android:mimeType="application/vnd.ms-powerpoint" />
+                <data android:mimeType="application/vnd.openxmlformats-officedocument.presentationml.presentation" />
+                <data android:mimeType="application/vnd.oasis.opendocument.text" />
+                <data android:mimeType="application/vnd.oasis.opendocument.spreadsheet" />
+                <data android:mimeType="application/vnd.oasis.opendocument.presentation" />
+                <data android:mimeType="application/rtf" />
+                <data android:mimeType="application/javascript" />
+                <data android:mimeType="application/x-yaml" />
+                <data android:mimeType="application/yaml" />
+                <data android:mimeType="application/x-sh" />
+                <data android:mimeType="application/sql" />
+                <data android:mimeType="application/x-subrip" />
+                <data android:mimeType="application/csv" />
+            </intent-filter>
+
+            <!-- v3: formati che 151 Viewer mostra davvero. Tutti a priorita' 0 come gli altri: con
+                 priorita' diverse Android non mostra la scelta e apre il candidato piu' alto (trappola vista
+                 in v1). text/* sopra copre gia' markdown, html, csv, calendar, vcard, rtf, vtt: li ripeto
+                 per chiarezza e per le app che confrontano la stringa esatta. -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="content" />
+                <data android:scheme="file" />
+                <data android:mimeType="text/markdown" />
+                <data android:mimeType="text/x-markdown" />
+                <data android:mimeType="text/html" />
+                <data android:mimeType="application/xhtml+xml" />
+                <data android:mimeType="message/rfc822" />
+                <data android:mimeType="multipart/related" />
+                <data android:mimeType="application/x-mimearchive" />
+                <data android:mimeType="application/epub+zip" />
+                <data android:mimeType="application/zip" />
+                <data android:mimeType="application/x-zip-compressed" />
+                <data android:mimeType="application/x-rtf" />
+                <data android:mimeType="text/rtf" />
+                <data android:mimeType="text/calendar" />
+                <data android:mimeType="text/vcard" />
+                <data android:mimeType="text/x-vcard" />
+                <data android:mimeType="text/csv" />
+                <data android:mimeType="text/vtt" />
+                <data android:mimeType="application/toml" />
+                <data android:mimeType="audio/*" />
+                <data android:mimeType="font/*" />
+                <data android:mimeType="application/font-woff" />
+                <data android:mimeType="application/x-font-ttf" />
+                <data android:mimeType="application/x-font-otf" />
+                <data android:mimeType="application/vnd.ms-word.document.macroenabled.12" />
+                <data android:mimeType="application/vnd.openxmlformats-officedocument.wordprocessingml.template" />
+                <data android:mimeType="application/vnd.ms-excel.sheet.macroenabled.12" />
+                <data android:mimeType="application/vnd.ms-excel.sheet.binary.macroenabled.12" />
+                <data android:mimeType="application/vnd.openxmlformats-officedocument.spreadsheetml.template" />
+                <data android:mimeType="application/vnd.ms-powerpoint.presentation.macroenabled.12" />
+                <data android:mimeType="application/vnd.openxmlformats-officedocument.presentationml.slideshow" />
+                <data android:mimeType="application/vnd.openxmlformats-officedocument.presentationml.template" />
+                <data android:mimeType="application/vnd.oasis.opendocument.text-template" />
+                <data android:mimeType="application/vnd.oasis.opendocument.spreadsheet-template" />
+                <data android:mimeType="application/vnd.oasis.opendocument.presentation-template" />
+            </intent-filter>
+
+            <!-- v5: documenti-immagine (non foto) -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="content" />
+                <data android:scheme="file" />
+                <data android:mimeType="image/svg+xml" />
+                <data android:mimeType="image/tiff" />
+                <data android:mimeType="image/tiff-fx" />
+                <data android:mimeType="image/x-tiff" />
+                <data android:mimeType="image/vnd.adobe.photoshop" />
+                <data android:mimeType="image/x-photoshop" />
+                <data android:mimeType="image/psd" />
+                <data android:mimeType="application/photoshop" />
+                <data android:mimeType="application/x-photoshop" />
+                <data android:mimeType="application/psd" />
+                <data android:mimeType="application/postscript" />
+                <data android:mimeType="application/eps" />
+                <data android:mimeType="application/x-eps" />
+                <data android:mimeType="image/eps" />
+                <data android:mimeType="image/x-eps" />
+                <data android:mimeType="application/illustrator" />
+                <data android:mimeType="application/vnd.adobe.illustrator" />
+            </intent-filter>
+
+            <!-- v5: Outlook, iWork, XPS, fumetti, ebook Kindle/FB2, archivi, notebook, dati geografici, diagrammi,
+                 torrent, APK, certificati e firme digitali (.p7m), collegamenti. Priorita' 0, come sopra. -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="content" />
+                <data android:scheme="file" />
+                <data android:mimeType="application/vnd.ms-outlook" />
+                <data android:mimeType="application/x-msg" />
+                <data android:mimeType="application/vnd.apple.pages" />
+                <data android:mimeType="application/vnd.apple.numbers" />
+                <data android:mimeType="application/vnd.apple.keynote" />
+                <data android:mimeType="application/x-iwork-pages-sffpages" />
+                <data android:mimeType="application/x-iwork-numbers-sffnumbers" />
+                <data android:mimeType="application/x-iwork-keynote-sffkey" />
+                <data android:mimeType="application/vnd.ms-xpsdocument" />
+                <data android:mimeType="application/oxps" />
+                <data android:mimeType="application/vnd.comicbook+zip" />
+                <data android:mimeType="application/x-cbz" />
+                <data android:mimeType="application/vnd.comicbook-rar" />
+                <data android:mimeType="application/x-cbr" />
+                <data android:mimeType="application/x-cb7" />
+                <data android:mimeType="application/x-mobipocket-ebook" />
+                <data android:mimeType="application/vnd.amazon.ebook" />
+                <data android:mimeType="application/vnd.amazon.mobi8-ebook" />
+                <data android:mimeType="application/x-mobi8-ebook" />
+                <data android:mimeType="application/x-fictionbook+xml" />
+                <data android:mimeType="application/x-fictionbook" />
+                <data android:mimeType="application/x-7z-compressed" />
+                <data android:mimeType="application/x-tar" />
+                <data android:mimeType="application/gzip" />
+                <data android:mimeType="application/x-gzip" />
+                <data android:mimeType="application/x-compressed-tar" />
+                <data android:mimeType="application/x-rar-compressed" />
+                <data android:mimeType="application/vnd.rar" />
+                <data android:mimeType="application/x-rar" />
+                <data android:mimeType="application/x-bzip2" />
+                <data android:mimeType="application/x-bzip" />
+                <data android:mimeType="application/x-xz" />
+                <data android:mimeType="application/zstd" />
+                <data android:mimeType="application/x-zstd" />
+                <data android:mimeType="application/x-lzma" />
+                <data android:mimeType="application/x-ipynb+json" />
+                <data android:mimeType="application/jsonl" />
+                <data android:mimeType="application/x-ndjson" />
+                <data android:mimeType="application/geo+json" />
+                <data android:mimeType="application/vnd.geo+json" />
+                <data android:mimeType="application/gpx+xml" />
+                <data android:mimeType="application/vnd.google-earth.kml+xml" />
+                <data android:mimeType="application/vnd.google-earth.kmz" />
+                <data android:mimeType="application/vnd.jgraph.mxfile" />
+                <data android:mimeType="application/vnd.excalidraw+json" />
+                <data android:mimeType="application/x-tex" />
+                <data android:mimeType="application/x-latex" />
+                <data android:mimeType="application/x-bibtex" />
+                <data android:mimeType="application/x-diff" />
+                <data android:mimeType="application/x-patch" />
+                <data android:mimeType="application/x-bittorrent" />
+                <data android:mimeType="application/vnd.android.package-archive" />
+                <data android:mimeType="application/x-pem-file" />
+                <data android:mimeType="application/x-x509-ca-cert" />
+                <data android:mimeType="application/x-x509-user-cert" />
+                <data android:mimeType="application/pkix-cert" />
+                <data android:mimeType="application/pkcs7-mime" />
+                <data android:mimeType="application/pkcs7-signature" />
+                <data android:mimeType="application/x-pkcs7-certificates" />
+                <data android:mimeType="application/x-pkcs7-mime" />
+                <data android:mimeType="application/x-pkcs7-signature" />
+                <data android:mimeType="application/x-mswinurl" />
+                <data android:mimeType="application/internet-shortcut" />
+                <data android:mimeType="application/x-url" />
+                <data android:mimeType="application/x-webloc" />
+                <data android:mimeType="application/x-desktop" />
+                <data android:mimeType="application/x-ole-storage" />
+            </intent-filter>
+
+            <!-- Ripiego: qualunque altro tipo application/*, a priorita' -10.
+                 Attenzione a come Android usa la priorita': se i candidati hanno priorita' DIVERSE non
+                 mostra la scelta e apre direttamente quello piu' alto. v1 aveva SOLO questo filtro per
+                 i tipi generici: provato sull'emulatore, un file application/octet-stream andava dritto
+                 a Google Wallet senza mai proporre 151 Viewer. Per questo i tipi utili sono nei filtri
+                 sopra a priorita' 0. Fino alla v4 qui c'era */*: dalla v5 solo application/*, altrimenti
+                 151 Viewer resterebbe candidato (a -10) anche per foto e video. -->
+            <intent-filter android:priority="-10">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="content" />
+                <data android:scheme="file" />
+                <data android:mimeType="application/*" />
+            </intent-filter>
+
+            <!-- Condividi -> 151 Viewer (SEND non porta un URI nei dati: niente scheme qui). Niente foto/video. -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="application/pdf" />
+                <data android:mimeType="application/x-pdf" />
+                <data android:mimeType="text/*" />
+                <data android:mimeType="application/json" />
+                <data android:mimeType="application/xml" />
+                <data android:mimeType="application/epub+zip" />
+                <data android:mimeType="application/zip" />
+                <data android:mimeType="message/rfc822" />
+                <data android:mimeType="application/msword" />
+                <data android:mimeType="application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
+                <data android:mimeType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+                <data android:mimeType="application/vnd.openxmlformats-officedocument.presentationml.presentation" />
+                <data android:mimeType="application/vnd.oasis.opendocument.text" />
+                <data android:mimeType="application/vnd.oasis.opendocument.spreadsheet" />
+                <data android:mimeType="application/vnd.oasis.opendocument.presentation" />
+                <data android:mimeType="application/rtf" />
+                <data android:mimeType="image/svg+xml" />
+                <data android:mimeType="image/tiff" />
+                <data android:mimeType="application/vnd.ms-outlook" />
+                <data android:mimeType="application/vnd.ms-excel" />
+                <data android:mimeType="application/vnd.ms-powerpoint" />
+                <data android:mimeType="application/x-7z-compressed" />
+                <data android:mimeType="application/vnd.rar" />
+                <data android:mimeType="application/x-rar-compressed" />
+                <data android:mimeType="application/gzip" />
+                <data android:mimeType="application/x-tar" />
+                <data android:mimeType="application/vnd.apple.pages" />
+                <data android:mimeType="application/vnd.apple.numbers" />
+                <data android:mimeType="application/vnd.apple.keynote" />
+                <data android:mimeType="application/vnd.ms-xpsdocument" />
+                <data android:mimeType="application/x-mobipocket-ebook" />
+                <data android:mimeType="application/pkcs7-mime" />
+                <data android:mimeType="application/x-ipynb+json" />
+            </intent-filter>
+        </activity>
+
+        <!-- «L'app si è chiusa»: rapporto dell'ultimo crash con Copia / Condividi (vedi CrashLog) -->
+        <activity
+            android:name=".CrashActivity"
+            android:exported="false"
+            android:label="@string/crash_title" />
+    </application>
+</manifest>

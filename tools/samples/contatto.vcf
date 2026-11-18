@@ -1,0 +1,18 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Rossi;Maria;;;
+FN:Maria Rossi
+ORG:Esempio Srl
+TITLE:Responsabile
+TEL;TYPE=CELL:+39 333 000 0000
+TEL;TYPE=WORK:+39 051 000000
+EMAIL:maria@example.com
+ADR;TYPE=WORK:;;Via Roma 1;Bologna;;40100;Italia
+BDAY:1990-05-12
+NOTE:Contatto finto di prova
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+FN:Luca Bianchi
+TEL:+39 347 111 1111
+END:VCARD

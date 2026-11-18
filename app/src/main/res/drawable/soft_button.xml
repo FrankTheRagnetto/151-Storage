@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- un bottone della riga del conteggio: riquadro un po' più scuro del fondo; premuto, più scuro ancora.
+     Angoli 6dp come foglietti e linguette (DESIGN.md: 4/6dp; erano 10dp) -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <corners android:radius="6dp" />
+            <solid android:color="@color/soft_button_pressed" />
+            <stroke android:width="1dp" android:color="@color/soft_button_edge" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="6dp" />
+            <solid android:color="@color/soft_button" />
+            <stroke android:width="1dp" android:color="@color/soft_button_edge" />
+        </shape>
+    </item>
+</selector>

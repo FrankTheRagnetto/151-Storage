@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tema scuro: la lastra è inchiostro, l'acetato è fumé. Le tinte di sezione si abbassano. -->
+<resources>
+    <color name="board">#131311</color>
+    <color name="acetate">#1F1E1B</color>
+    <color name="acetate_leaf">#EB1F1E1B</color>
+    <color name="acetate_raised">#292824</color>
+    <color name="acetate_sunk">#181715</color>
+    <color name="ink">#EEE9DC</color>
+    <color name="ink_muted">#ADA697</color>
+    <color name="row_selected">#24EEE9DC</color>
+    <color name="seam">#36342F</color>
+    <color name="seam_strong">#6E695E</color>
+    <color name="vermilion">#FF7A5E</color>
+    <color name="vermilion_wash">#3A1E17</color>
+    <color name="hue_all">#2C2A26</color>
+    <!-- di notte le sezioni si abbassano (72% tinta, 28% inchiostro): il foglio porta lo schermo, non la lastra -->
+    <color name="hue_pdf">#A3461B</color>
+    <color name="hue_word">#243B82</color>
+    <color name="hue_excel">#30692C</color>
+    <color name="hue_ppt">#8F324F</color>
+    <color name="hue_text">#52338D</color>
+    <color name="hue_archive">#AF851A</color>
+    <color name="hue_other">#4F5255</color>
+    <color name="hue_audio">#535F19</color>
+    <!-- i posti di Storage, abbassati con la stessa regola -->
+    <color name="place_photo">#125C55</color>
+    <color name="place_folder">#84653E</color>
+    <color name="place_cloud">#326C9B</color>
+    <color name="soft_button">#1AEEE9DC</color>
+    <color name="soft_button_pressed">#40EEE9DC</color>
+    <color name="soft_button_edge">#33EEE9DC</color>
+    <!-- Documenti: un colore suo, fisso — la cartellina manila; le categorie colorano il foglio sotto -->
+    <color name="place_docs">#9E7D4E</color> <!-- manila più chiaro di Phone -->
+</resources>

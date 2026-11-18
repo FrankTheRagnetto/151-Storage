@@ -1,0 +1,4 @@
+* Progetto
+** TODO Scrivere il README
+   SCHEDULED: <2026-10-01>
+** DONE Provare 151 Viewer

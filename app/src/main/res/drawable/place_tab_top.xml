@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- linguetta di posto IN ALTO: angoli alti da 6dp come le sotto-linguette (Shape.Viewer.Tab; erano 8dp), bassi diritti (si attacca alla riga sotto).
+     Il colore lo mette il codice. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/acetate_sunk" />
+    <corners android:topLeftRadius="6dp" android:topRightRadius="6dp" android:bottomLeftRadius="0dp" android:bottomRightRadius="0dp" />
+</shape>

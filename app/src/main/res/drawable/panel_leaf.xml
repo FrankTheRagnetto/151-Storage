@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- il foglio di acetato (latte, appena trasparente: la tinta della sezione si intravede) appoggiato sulla lastra della sezione: angoli alti tagliati, base aperta -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/acetate_leaf" />
+    <corners android:topLeftRadius="4dp" android:topRightRadius="4dp" android:bottomLeftRadius="0dp" android:bottomRightRadius="0dp" />
+</shape>

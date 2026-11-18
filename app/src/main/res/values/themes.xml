@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 151 Viewer — tema «il manuale con le linguette» (DESIGN.md). Niente Material You:
+     i colori sono quelli del manuale, chiaro o scuro secondo il telefono. -->
+<resources>
+    <style name="Theme.Viewer.Base" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- ruoli di colore -->
+        <item name="colorPrimary">@color/ink</item>
+        <item name="colorOnPrimary">@color/acetate</item>
+        <item name="colorPrimaryContainer">@color/hue_archive</item>
+        <item name="colorOnPrimaryContainer">@color/on_hue_dark</item>
+        <item name="colorSecondary">@color/ink_muted</item>
+        <item name="colorOnSecondary">@color/acetate</item>
+        <item name="colorSecondaryContainer">@color/acetate_sunk</item>
+        <item name="colorOnSecondaryContainer">@color/ink</item>
+        <item name="colorTertiary">@color/hue_archive</item>
+        <item name="colorError">@color/vermilion</item>
+        <item name="colorErrorContainer">@color/vermilion_wash</item>
+        <item name="colorOnErrorContainer">@color/ink</item>
+        <item name="android:colorBackground">@color/board</item>
+        <item name="colorOnBackground">@color/ink</item>
+        <item name="colorSurface">@color/acetate</item>
+        <item name="colorOnSurface">@color/ink</item>
+        <item name="colorOnSurfaceVariant">@color/ink_muted</item>
+        <item name="colorSurfaceVariant">@color/acetate_sunk</item>
+        <item name="colorSurfaceContainerLowest">@color/acetate_raised</item>
+        <item name="colorSurfaceContainerLow">@color/acetate</item>
+        <item name="colorSurfaceContainer">@color/acetate</item>
+        <item name="colorSurfaceContainerHigh">@color/acetate_raised</item>
+        <item name="colorSurfaceContainerHighest">@color/acetate_raised</item>
+        <item name="colorOutline">@color/seam_strong</item>
+        <item name="colorOutlineVariant">@color/seam</item>
+        <item name="colorControlHighlight">#1F7F735C</item>
+        <item name="android:windowBackground">@color/board</item>
+        <item name="android:textColorHighlight">#66EBB21D</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+
+        <!-- caratteri: Archivo dice, Garamond spiega, Mono misura. Mai android:fontFamily nel tema:
+             vale come attributo della vista e batte ogni textAppearance (tutto diventava Archivo regular). -->
+        <item name="textAppearanceHeadlineSmall">@style/TextAppearance.Viewer.Headline</item>
+        <item name="textAppearanceTitleLarge">@style/TextAppearance.Viewer.TitleLarge</item>
+        <item name="textAppearanceTitleMedium">@style/TextAppearance.Viewer.Title</item>
+        <item name="textAppearanceTitleSmall">@style/TextAppearance.Viewer.TitleSmall</item>
+        <item name="textAppearanceBodyLarge">@style/TextAppearance.Viewer.Body</item>
+        <item name="textAppearanceBodyMedium">@style/TextAppearance.Viewer.Prose</item>
+        <item name="textAppearanceBodySmall">@style/TextAppearance.Viewer.Meta</item>
+        <item name="textAppearanceLabelLarge">@style/TextAppearance.Viewer.Label</item>
+        <item name="textAppearanceLabelMedium">@style/TextAppearance.Viewer.Label</item>
+        <item name="textAppearanceLabelSmall">@style/TextAppearance.Viewer.Meta</item>
+
+        <!-- forme: angoli piccoli, da carta tagliata -->
+        <item name="shapeAppearanceSmallComponent">@style/Shape.Viewer.Cut</item>
+        <item name="shapeAppearanceMediumComponent">@style/Shape.Viewer.Cut</item>
+        <item name="shapeAppearanceLargeComponent">@style/Shape.Viewer.Leaf</item>
+        <item name="shapeAppearanceCornerSmall">@style/Shape.Viewer.Cut</item>
+        <item name="shapeAppearanceCornerMedium">@style/Shape.Viewer.Cut</item>
+        <item name="shapeAppearanceCornerLarge">@style/Shape.Viewer.Leaf</item>
+        <item name="shapeAppearanceCornerExtraLarge">@style/Shape.Viewer.Leaf</item>
+
+        <!-- componenti -->
+        <item name="toolbarStyle">@style/Widget.Viewer.Toolbar</item>
+        <item name="materialButtonStyle">@style/Widget.Viewer.Button</item>
+        <item name="materialButtonOutlinedStyle">@style/Widget.Viewer.Button.Outlined</item>
+        <item name="borderlessButtonStyle">@style/Widget.Viewer.Button.Text</item>
+        <item name="extendedFloatingActionButtonStyle">@style/Widget.Viewer.Fab</item>
+        <item name="tabStyle">@style/Widget.Viewer.Tabs</item>
+        <item name="snackbarStyle">@style/Widget.Viewer.Snackbar</item>
+        <item name="snackbarTextViewStyle">@style/Widget.Viewer.Snackbar.Text</item>
+        <item name="snackbarButtonStyle">@style/Widget.Viewer.Snackbar.Action</item>
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.Viewer.Dialog</item>
+        <item name="textInputStyle">@style/Widget.Viewer.Search</item>
+        <item name="circularProgressIndicatorStyle">@style/Widget.Material3.CircularProgressIndicator</item>
+        <item name="android:progressBarStyle">@style/Widget.Viewer.Progress</item>
+        <item name="actionOverflowMenuStyle">@style/Widget.Viewer.PopupMenu</item>
+        <item name="popupMenuStyle">@style/Widget.Viewer.PopupMenu</item>
+        <item name="textAppearanceLargePopupMenu">@style/TextAppearance.Viewer.Body</item>
+        <item name="textAppearanceSmallPopupMenu">@style/TextAppearance.Viewer.Body</item>
+    </style>
+
+    <style name="Theme.Viewer" parent="Theme.Viewer.Base" />
+    <!-- visore di foto e video: fondo nero, niente splash di carta -->
+    <style name="Theme.Viewer.Media" parent="Theme.Viewer">
+        <item name="android:windowBackground">@color/image_bg</item>
+    </style>
+
+    <!-- ===== tipografia ===== -->
+    <style name="TextAppearance.Viewer.Display" parent="TextAppearance.Material3.HeadlineSmall">
+        <item name="fontFamily">@font/archivo_condensed_bold</item>
+        <item name="android:fontFamily">@font/archivo_condensed_bold</item>
+        <item name="android:textSize">27sp</item>
+        <item name="android:letterSpacing">0.02</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+    <style name="TextAppearance.Viewer.Headline" parent="TextAppearance.Material3.HeadlineSmall">
+        <item name="fontFamily">@font/archivo_condensed_bold</item>
+        <item name="android:fontFamily">@font/archivo_condensed_bold</item>
+        <item name="android:textSize">25sp</item>
+        <item name="lineHeight">29sp</item>
+        <item name="android:letterSpacing">0.005</item>
+    </style>
+    <style name="TextAppearance.Viewer.TitleLarge" parent="TextAppearance.Material3.TitleLarge">
+        <item name="fontFamily">@font/archivo_bold</item>
+        <item name="android:fontFamily">@font/archivo_bold</item>
+        <item name="android:textSize">22sp</item>
+    </style>
+    <style name="TextAppearance.Viewer.Title" parent="TextAppearance.Material3.TitleMedium">
+        <item name="fontFamily">@font/archivo_semibold</item>
+        <item name="android:fontFamily">@font/archivo_semibold</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="TextAppearance.Viewer.TitleSmall" parent="TextAppearance.Material3.TitleSmall">
+        <item name="fontFamily">@font/archivo_semibold</item>
+        <item name="android:fontFamily">@font/archivo_semibold</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="TextAppearance.Viewer.Body" parent="TextAppearance.Material3.BodyLarge">
+        <item name="fontFamily">@font/archivo_medium</item>
+        <item name="android:fontFamily">@font/archivo_medium</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <!-- le frasi dell'app: spiegazioni, dialoghi, messaggi -->
+    <style name="TextAppearance.Viewer.Prose" parent="TextAppearance.Material3.BodyMedium">
+        <item name="fontFamily">@font/garamond_regular</item>
+        <item name="android:fontFamily">@font/garamond_regular</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="lineHeight">25sp</item>
+    </style>
+    <!-- la voce della macchina: misure, date, percorsi, conteggi -->
+    <style name="TextAppearance.Viewer.Meta" parent="TextAppearance.Material3.BodySmall">
+        <item name="fontFamily">@font/mono_regular</item>
+        <item name="android:fontFamily">@font/mono_regular</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="TextAppearance.Viewer.Label" parent="TextAppearance.Material3.LabelLarge">
+        <item name="fontFamily">@font/archivo_semibold</item>
+        <item name="android:fontFamily">@font/archivo_semibold</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+    <!-- le linguette: condensato, maiuscolo, come stampato sul cartoncino -->
+    <style name="TextAppearance.Viewer.Tab" parent="TextAppearance.Material3.LabelLarge">
+        <item name="fontFamily">@font/archivo_condensed_bold</item>
+        <item name="android:fontFamily">@font/archivo_condensed_bold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0.04</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+    <style name="TextAppearance.Viewer.Badge" parent="TextAppearance.Material3.LabelSmall">
+        <item name="fontFamily">@font/mono_medium</item>
+        <item name="android:fontFamily">@font/mono_medium</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <!-- ===== forme ===== -->
+    <style name="Shape.Viewer.Cut" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">4dp</item>
+    </style>
+    <style name="Shape.Viewer.Leaf" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">6dp</item>
+    </style>
+    <style name="Shape.Viewer.Tab" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">6dp</item>
+        <item name="cornerSizeTopRight">6dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+    </style>
+
+    <!-- ===== componenti ===== -->
+    <style name="Widget.Viewer.Toolbar" parent="Widget.Material3.Toolbar">
+        <item name="titleTextAppearance">@style/TextAppearance.Viewer.Display</item>
+        <item name="subtitleTextAppearance">@style/TextAppearance.Viewer.Meta</item>
+        <item name="titleTextColor">@color/ink</item>
+        <item name="subtitleTextColor">@color/ink_muted</item>
+        <item name="android:background">@color/acetate</item>
+    </style>
+    <style name="Widget.Viewer.Button" parent="Widget.Material3.Button">
+        <item name="android:textAppearance">@style/TextAppearance.Viewer.Label</item>
+        <item name="shapeAppearance">@style/Shape.Viewer.Cut</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:paddingStart">22dp</item>
+        <item name="android:paddingEnd">22dp</item>
+        <item name="backgroundTint">@color/ink</item>
+        <item name="android:textColor">@color/acetate</item>
+        <item name="iconTint">@color/acetate</item>
+    </style>
+    <style name="Widget.Viewer.Button.Outlined" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:textAppearance">@style/TextAppearance.Viewer.Label</item>
+        <item name="shapeAppearance">@style/Shape.Viewer.Cut</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="strokeColor">@color/ink</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="android:textColor">@color/ink</item>
+        <item name="iconTint">@color/ink</item>
+    </style>
+    <style name="Widget.Viewer.Button.Text" parent="Widget.Material3.Button.TextButton">
+        <item name="android:textAppearance">@style/TextAppearance.Viewer.Label</item>
+        <item name="shapeAppearance">@style/Shape.Viewer.Cut</item>
+        <item name="android:textColor">@color/ink</item>
+        <item name="iconTint">@color/ink</item>
+    </style>
+    <style name="Widget.Viewer.Button.Text.Dialog" parent="Widget.Material3.Button.TextButton.Dialog">
+        <item name="android:textAppearance">@style/TextAppearance.Viewer.Label</item>
+        <item name="shapeAppearance">@style/Shape.Viewer.Cut</item>
+        <item name="android:textColor">@color/ink</item>
+    </style>
+    <style name="Widget.Viewer.Fab" parent="Widget.Material3.ExtendedFloatingActionButton.Icon.Primary">
+        <item name="android:textAppearance">@style/TextAppearance.Viewer.Label</item>
+        <item name="shapeAppearanceOverlay">@style/Shape.Viewer.Leaf</item>
+        <item name="backgroundTint">@color/hue_archive</item>
+        <item name="strokeColor">@color/on_hue_dark</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="elevation">0dp</item>
+        <item name="hoveredFocusedTranslationZ">0dp</item>
+        <item name="pressedTranslationZ">0dp</item>
+        <item name="android:textColor">@color/on_hue_dark</item>
+        <item name="iconTint">@color/on_hue_dark</item>
+    </style>
+    <style name="Widget.Viewer.Tabs" parent="Widget.Material3.TabLayout">
+        <item name="android:background">@color/acetate</item>
+        <item name="tabTextAppearance">@style/TextAppearance.Viewer.Label</item>
+        <item name="tabTextColor">@color/ink_muted</item>
+        <item name="tabSelectedTextColor">@color/ink</item>
+        <item name="tabIndicatorColor">@color/ink</item>
+        <item name="tabIndicatorHeight">3dp</item>
+        <item name="tabIndicatorFullWidth">false</item>
+        <item name="tabRippleColor">#1F7F735C</item>
+        <item name="tabMinWidth">96dp</item>
+    </style>
+    <style name="Widget.Viewer.Snackbar" parent="Widget.Material3.Snackbar">
+        <item name="backgroundTint">@color/ink</item>
+        <item name="shapeAppearance">@style/Shape.Viewer.Cut</item>
+    </style>
+    <style name="Widget.Viewer.Snackbar.Text" parent="Widget.Material3.Snackbar.TextView">
+        <item name="android:textAppearance">@style/TextAppearance.Viewer.Body</item>
+        <item name="android:textColor">@color/acetate</item>
+    </style>
+    <style name="Widget.Viewer.Snackbar.Action" parent="Widget.Material3.Button.TextButton.Snackbar">
+        <item name="android:textAppearance">@style/TextAppearance.Viewer.Label</item>
+        <item name="android:textColor">@color/hue_archive</item>
+    </style>
+    <style name="Widget.Viewer.Search" parent="Widget.Material3.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxBackgroundColor">@color/acetate_raised</item>
+        <item name="boxStrokeColor">@color/ink</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeWidthFocused">2dp</item>
+        <item name="shapeAppearance">@style/Shape.Viewer.Cut</item>
+        <item name="startIconTint">@color/ink_muted</item>
+        <item name="endIconTint">@color/ink_muted</item>
+        <item name="hintTextColor">@color/ink_muted</item>
+        <item name="android:textColorHint">@color/ink_muted</item>
+    </style>
+    <style name="Widget.Viewer.Progress" parent="Widget.AppCompat.ProgressBar">
+        <item name="android:indeterminateTint">@color/ink</item>
+    </style>
+    <style name="Widget.Viewer.PopupMenu" parent="Widget.Material3.PopupMenu.Overflow">
+        <item name="android:popupBackground">@drawable/popup_leaf</item>
+    </style>
+
+    <!-- 151 Storage: l'etichetta sopra un campo (spec §9) -->
+    <style name="Storage.FieldLabel" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.Viewer.Meta</item>
+        <item name="android:textColor">@color/ink_muted</item>
+    </style>
+
+    <!-- i pulsanti del video: 48dp, icona chiara sul velo scuro -->
+    <style name="Storage.VideoButton" parent="">
+        <item name="android:layout_width">56dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_marginHorizontal">6dp</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+        <item name="android:tint">@color/on_scrim</item>
+        <item name="android:scaleType">center</item>
+    </style>
+
+    <!-- Random day / Today: le frecce giorno prima / dopo ai lati del nome del giorno -->
+    <style name="Storage.DayArrow" parent="">
+        <item name="android:layout_width">56dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+        <item name="android:tint">@color/ink</item>
+        <item name="android:scaleType">center</item>
+    </style>
+
+    <!-- dialoghi: un foglio di acetato, titolo Archivo, frase Garamond -->
+    <style name="ThemeOverlay.Viewer.Dialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="colorSurface">@color/acetate_raised</item>
+        <item name="colorSurfaceContainerHigh">@color/acetate_raised</item>
+        <item name="shapeAppearanceOverlay">@style/Shape.Viewer.Leaf</item>
+        <item name="materialAlertDialogTitleTextStyle">@style/Viewer.Dialog.Title</item>
+        <item name="materialAlertDialogBodyTextStyle">@style/Viewer.Dialog.Body</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.Viewer.Button.Text.Dialog</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.Viewer.Button.Text.Dialog</item>
+        <item name="buttonBarNeutralButtonStyle">@style/Widget.Viewer.Button.Text.Dialog</item>
+        <item name="colorPrimary">@color/ink</item>
+        <item name="colorControlActivated">@color/ink</item>
+        <item name="textAppearanceBodyLarge">@style/TextAppearance.Viewer.Body</item>
+        <item name="textAppearanceBodyMedium">@style/TextAppearance.Viewer.Body</item>
+        <item name="textAppearanceSubtitle1">@style/TextAppearance.Viewer.Body</item>
+    </style>
+    <!-- dialoghi a elenco (menu del file, recenti): le voci sono comandi, quindi Archivo e non Garamond -->
+    <style name="ThemeOverlay.Viewer.Dialog.List" parent="ThemeOverlay.Viewer.Dialog">
+        <item name="materialAlertDialogBodyTextStyle">@style/Viewer.Dialog.Item</item>
+    </style>
+    <style name="Viewer.Dialog.Item" parent="MaterialAlertDialog.Material3.Body.Text">
+        <item name="android:textAppearance">@style/TextAppearance.Viewer.Body</item>
+        <item name="android:textColor">@color/ink</item>
+    </style>
+    <style name="Viewer.Dialog.Title" parent="MaterialAlertDialog.Material3.Title.Text">
+        <item name="android:textAppearance">@style/TextAppearance.Viewer.Headline</item>
+        <item name="android:textColor">@color/ink</item>
+    </style>
+    <style name="Viewer.Dialog.Body" parent="MaterialAlertDialog.Material3.Body.Text">
+        <item name="android:textAppearance">@style/TextAppearance.Viewer.Prose</item>
+        <item name="android:textColor">@color/ink</item>
+    </style>
+</resources>

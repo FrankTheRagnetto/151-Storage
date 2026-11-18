@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- il segno di 151 Viewer: un foglio del manuale con le linguette di sezione sul taglio -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="64dp" android:height="64dp" android:viewportWidth="64" android:viewportHeight="64">
+    <path android:fillColor="@color/hue_pdf" android:pathData="M44,8h7a2,2 0,0 1,2 2v6a2,2 0,0 1,-2 2h-7z"/>
+    <path android:fillColor="@color/hue_word" android:pathData="M44,19h7a2,2 0,0 1,2 2v6a2,2 0,0 1,-2 2h-7z"/>
+    <path android:fillColor="@color/hue_excel" android:pathData="M44,30h7a2,2 0,0 1,2 2v6a2,2 0,0 1,-2 2h-7z"/>
+    <path android:fillColor="@color/hue_archive" android:pathData="M44,41h7a2,2 0,0 1,2 2v6a2,2 0,0 1,-2 2h-7z"/>
+    <path android:fillColor="@color/hue_text" android:pathData="M44,52h7a2,2 0,0 1,2 2v4a2,2 0,0 1,-2 2h-7z"/>
+    <path android:fillColor="@color/acetate_raised" android:strokeColor="@color/ink" android:strokeWidth="2"
+        android:pathData="M12,5h31a2,2 0,0 1,2 2v51a2,2 0,0 1,-2 2h-31a2,2 0,0 1,-2 -2v-51a2,2 0,0 1,2 -2z"/>
+    <path android:fillColor="@color/ink" android:pathData="M20,20h18v2.5h-18zM20,27h18v2.5h-18zM20,34h18v2.5h-18zM20,41h11v2.5h-11z"/>
+    <path android:fillColor="@color/board" android:strokeColor="@color/ink" android:strokeWidth="1"
+        android:pathData="M15.5,17m-2.2,0a2.2,2.2 0,1 1,4.4 0a2.2,2.2 0,1 1,-4.4 0M15.5,48m-2.2,0a2.2,2.2 0,1 1,4.4 0a2.2,2.2 0,1 1,-4.4 0"/>
+</vector>

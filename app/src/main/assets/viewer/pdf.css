@@ -1,0 +1,63 @@
+:root {
+  --bg: #dad2bf;
+  --fg: #1c1b18;
+  --pill-bg: rgba(28, 27, 24, .86);
+  --pill-fg: #f5f1e6;
+  --accent: #db5a1f;
+  color-scheme: light;
+}
+.theme-dark {
+  --bg: #131311;
+  --fg: #eee9dc;
+  --pill-bg: rgba(238, 233, 220, .9);
+  --pill-fg: #1c1b18;
+  color-scheme: dark;
+}
+html, body { margin: 0; height: 100%; background: var(--bg); color: var(--fg);
+  font-family: system-ui, sans-serif; -webkit-tap-highlight-color: transparent; overflow: hidden; }
+
+#viewerContainer {
+  position: absolute; inset: 0; overflow: auto;
+  /* pan con un dito nativo; il pinch lo gestisce pdf.js (TouchManager) */
+  touch-action: pan-x pan-y;
+  overscroll-behavior: contain;
+}
+#viewerContainer::-webkit-scrollbar { display: none; }
+.pdfViewer { padding: 6px 0 24px; }
+.pdfViewer .page { margin: 0 auto 8px; border: 0; box-shadow: 0 1px 3px rgba(0,0,0,.18); }
+.theme-dark .pdfViewer .page { box-shadow: 0 1px 3px rgba(0,0,0,.6); }
+
+/* Pagine scure: inverte il foglio (testo chiaro su fondo scuro). Le foto risultano invertite: e' il compromesso noto. */
+.pdf-dark .pdfViewer .page { background: #111 !important; }
+.pdf-dark .pdfViewer .page .canvasWrapper { filter: invert(0.92) hue-rotate(180deg); }
+
+/* evidenziazione ricerca */
+.textLayer .highlight { background-color: rgba(235, 178, 29, .45); }
+.textLayer .highlight.selected { background-color: rgba(219, 90, 31, .55); }
+
+#bar { position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 20; pointer-events: none; opacity: 0; transition: opacity .3s; }
+#bar.on { opacity: 1; }
+#barFill { height: 100%; width: 0; background: var(--accent); transition: width .15s; }
+
+#pill {
+  position: fixed; right: 14px; bottom: 16px; z-index: 10;
+  border: 0; border-radius: 4px; padding: 8px 12px;
+  background: var(--pill-bg); color: var(--pill-fg);
+  font: 500 13px/1 var(--meta); font-variant-numeric: tabular-nums;
+  opacity: 0; transition: opacity .35s; pointer-events: none;
+}
+#pill.on { opacity: 1; pointer-events: auto; }
+
+/* maniglia di scorrimento veloce */
+#thumb {
+  position: fixed; right: 2px; top: 0; z-index: 11; width: 8px; height: 56px;
+  border-radius: 6px; background: var(--pill-bg); opacity: 0; transition: opacity .35s, width .15s;
+  touch-action: none;
+}
+#thumb.on { opacity: .75; }
+#thumb.drag { opacity: 1; width: 14px; }
+#thumb::before { content: ""; position: absolute; inset: -12px -10px -12px -26px; } /* area di presa piu' grande */
+
+#msg { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center;
+  padding: 32px; font: 18px/1.45 var(--prose); background: var(--bg); z-index: 30; }
+#msg[hidden] { display: none; }

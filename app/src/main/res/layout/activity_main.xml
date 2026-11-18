@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+THESIS: la libreria è un manuale aperto alla sezione giusta: ogni tipo di documento è una linguetta colorata, la sezione scelta diventa la lastra su cui appoggia il foglio d'acetato coi file; rifiuta l'elenco Material bianco a bollini casuali.
+OWN-WORLD: lastra di cartone (di notte inchiostro), acetato latte, tinte di sezione piene (ossido, oltremare, prato, rosa, viola, ottanio, cielo, Siena, giallo cromo, ardesia, muschio); vermiglio solo per gli errori; Archivo dice, Garamond spiega, Mono misura; angoli 4-6 dp, linee da 1 dp, nessuna ombra morbida.
+STORY: apre, vede quanti documenti ha per tipo, tocca una linguetta, trova il file e lo apre; il visualizzatore porta la fascia della stessa sezione; se non si apre, un foglietto dice perché e cosa fare.
+FIRST VIEWPORT: «151 STORAGE»; il posto aperto (Foto, Documenti, Cartelle, Cloud) con la sua lastra e il foglio; in basso le quattro linguette appese (design/storage-spec.md §3); sopra di loro, quando c'è, la riga dei caricamenti.
+FORM: sfidante «manuale a linguette» fuso coi fatti, preferito al candidato 7 assegnato; seed 6ae53851.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/board">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            app:title="@string/app_name" />
+
+        <!-- Le linguette dei posti IN ALTO, come uno schedario: quella scelta ha il colore del posto e
+             scende a toccare la riga sotto, che ha lo stesso colore; le altre restano dietro, più corte -->
+        <LinearLayout
+            android:id="@+id/places"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="@color/acetate"
+            android:orientation="horizontal"
+            android:paddingHorizontal="8dp"
+            android:paddingTop="4dp" />
+
+        <!-- La riga del conteggio, UNA per tutta l'app e sempre qui:
+             a sinistra quanti (il testo del posto aperto), a destra ordine e vista, bottoni che non toccano i bordi -->
+        <LinearLayout
+            android:id="@+id/statusRow"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="8dp"
+            android:paddingEnd="16dp">
+
+            <FrameLayout
+                android:id="@+id/statusSlot"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <!-- 48dp da toccare, 34dp da vedere (inset nel fondo): la riga non cambia aspetto -->
+            <LinearLayout
+                android:id="@+id/sortBtn"
+                android:layout_width="106dp"
+                android:layout_height="48dp"
+                android:background="@drawable/soft_button_tall"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingHorizontal="10dp">
+
+                <ImageView
+                    android:id="@+id/sortIcon"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_sort"
+                    app:tint="@color/ink" />
+
+                <TextView
+                    android:id="@+id/sortText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:textAllCaps="true"
+                    android:textAppearance="@style/TextAppearance.Viewer.Meta"
+                    android:textColor="@color/ink"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/viewBtn"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginEnd="-2dp"
+                android:background="@drawable/soft_button_icon"
+                android:scaleType="center"
+                app:tint="@color/ink" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/placeHost"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <!-- ============ Documenti: la libreria del 151 Viewer, com'era ============ -->
+            <LinearLayout
+                android:id="@+id/placeDocs"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <!-- via «Recent / Documents»: i Documenti sono solo la libreria -->
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tabs"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:visibility="gone"
+                    app:tabGravity="fill"
+                    app:tabMode="fixed" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <!-- ============ Documenti: ricerca, linguette, lastra della sezione, foglio coi file ============ -->
+                    <LinearLayout
+                        android:id="@+id/libPane"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/libTools"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/place_docs"
+                            android:orientation="vertical">
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/libSearchBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone"
+                                android:layout_marginHorizontal="12dp"
+                                android:layout_marginTop="12dp"
+                                android:hint="@string/lib_search_hint"
+                                app:endIconMode="clear_text"
+                                app:hintEnabled="false"
+                                app:startIconDrawable="@drawable/ic_search">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/libSearch"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="@string/lib_search_hint"
+                                    android:imeOptions="actionSearch"
+                                    android:inputType="text"
+                                    android:maxLines="1"
+                                    android:minHeight="48dp"
+                                    android:textAppearance="@style/TextAppearance.Viewer.Body" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <!-- la fila di linguette: una per tipo, la scelta si fonde con la lastra sotto -->
+                            <HorizontalScrollView
+                                android:id="@+id/tabStrip"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingTop="2dp"
+                                android:fadingEdgeLength="28dp"
+                                android:requiresFadingEdge="horizontal"
+                                android:scrollbars="none">
+
+                                <com.google.android.material.chip.ChipGroup
+                                    android:id="@+id/chips"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingHorizontal="8dp"
+                                    app:chipSpacingHorizontal="3dp"
+                                    app:selectionRequired="true"
+                                    app:singleLine="true"
+                                    app:singleSelection="true" />
+                            </HorizontalScrollView>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/libBoard"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:background="@color/hue_all"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="8dp">
+
+                            <TextView
+                                android:id="@+id/libStatus"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingHorizontal="8dp"
+                                android:paddingTop="9dp"
+                                android:paddingBottom="9dp"
+                                android:singleLine="true"
+                                android:textAppearance="@style/TextAppearance.Viewer.Meta" />
+
+                            <FrameLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/panel_leaf">
+
+                                <!-- tirare in giù = rileggere i documenti, come «Rescan» -->
+                                <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                                    android:id="@+id/libPull"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/libList"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:clipToPadding="false"
+                                    android:paddingTop="4dp"
+                                    android:scrollbarStyle="outsideOverlay"
+                                    android:scrollbars="vertical" />
+                                </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+                                <TextView
+                                    android:id="@+id/libEmpty"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:padding="32dp"
+                                    android:textAppearance="@style/TextAppearance.Viewer.Prose"
+                                    android:textColor="@color/ink_muted"
+                                    android:visibility="gone" />
+                            </FrameLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- invito: senza «Accesso a tutti i file» la libreria non puo' esserci -->
+                    <ScrollView
+                        android:id="@+id/libInvite"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fillViewport="true"
+                        android:visibility="gone">
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="20dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:background="@drawable/slip"
+                                android:orientation="vertical"
+                                android:paddingHorizontal="24dp"
+                                android:paddingTop="28dp"
+                                android:paddingBottom="24dp">
+
+                                <ImageView
+                                    android:layout_width="64dp"
+                                    android:layout_height="64dp"
+                                    android:importantForAccessibility="no"
+                                    android:src="@drawable/ic_manual" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="20dp"
+                                    android:text="@string/lib_invite_title"
+                                    android:breakStrategy="balanced"
+                        android:textAppearance="@style/TextAppearance.Viewer.Headline" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:text="@string/access_why"
+                                    android:textAppearance="@style/TextAppearance.Viewer.Prose" />
+
+                                <Button
+                                    android:id="@+id/libGrant"
+                                    style="?attr/materialButtonStyle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="22dp"
+                                    android:text="@string/grant_access" />
+                            </LinearLayout>
+                        </FrameLayout>
+                    </ScrollView>
+
+                    <!-- ============ Recenti: lo stesso foglio, sulla lastra neutra ============ -->
+                    <androidx.core.widget.NestedScrollView
+                        android:id="@+id/scroll"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clipToPadding="false"
+                        android:fillViewport="true"
+                        android:paddingHorizontal="8dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="96dp"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:id="@+id/list"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/slip"
+                            android:orientation="vertical"
+                            android:paddingVertical="4dp" />
+                    </androidx.core.widget.NestedScrollView>
+
+                    <TextView
+                        android:id="@+id/empty"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:padding="32dp"
+                        android:text="@string/recents_empty"
+                        android:textAppearance="@style/TextAppearance.Viewer.Prose"
+                        android:textColor="@color/ink_muted"
+                        android:visibility="gone" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <include layout="@layout/place_photos" />
+            <include layout="@layout/place_folders" />
+            <include layout="@layout/place_cloud" />
+            <include layout="@layout/view_invite" />
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="20dp"
+                android:text="@string/open_file"
+                app:icon="@drawable/ic_folder_open" />
+        </FrameLayout>
+
+        <!-- la riga dei caricamenti (spec §11): sopra le linguette, in tutti i posti, finché c'è una coda -->
+        <LinearLayout
+            android:id="@+id/upStrip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/acetate_raised"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/upBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:indicatorColor="@color/ink"
+                app:trackColor="@color/seam"
+                app:trackCornerRadius="0dp"
+                app:trackThickness="2dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:background="?attr/selectableItemBackground"
+                android:id="@+id/upRow"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp">
+
+                <ImageView
+                    android:id="@+id/upIcon"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_upload"
+                    app:tint="@color/ink" />
+
+                <TextView
+                    android:id="@+id/upText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:textAppearance="@style/TextAppearance.Viewer.Body"
+                    android:textColor="@color/ink" />
+
+                <TextView
+                    android:id="@+id/upMeta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:singleLine="true"
+                    android:textAppearance="@style/TextAppearance.Viewer.Meta"
+                    android:textColor="@color/ink_muted" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- in basso: le quattro linguette appese, o la barra della selezione al loro posto (spec §3, §5) -->
+        <FrameLayout
+            android:id="@+id/bottomHost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/acetate">
+
+            <LinearLayout
+                android:id="@+id/selBar"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:orientation="horizontal"
+                android:visibility="gone" />
+
+            <View
+                android:id="@+id/bottomSeam"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:visibility="gone"
+                android:layout_gravity="top"
+                android:background="@color/seam" />
+        </FrameLayout>
+    </LinearLayout>
+</FrameLayout>

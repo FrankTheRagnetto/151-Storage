@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8"><title>Pagina di prova</title>
+<link rel="stylesheet" href="pagina.css">
+<style>.inline { color: #0a7; }</style>
+<link rel="stylesheet" href="https://example.com/remoto.css">
+</head><body>
+<h1>Pagina HTML di prova</h1>
+<p class="inline">Stile in linea (verde).</p>
+<p class="esterno">Stile dal file pagina.css accanto (se raggiungibile: sfondo giallo).</p>
+<p>Immagine accanto: <img src="immagine.png" alt="immagine locale" width="100"></p>
+<p>Immagine remota: <img src="https://example.com/remota.png" alt="remota bloccata" width="50"></p>
+<p id="js">JavaScript SPENTO (se leggi questo, lo script non è girato).</p>
+<script>document.getElementById('js').textContent = 'JavaScript ACCESO: lo script della pagina è girato.';
+fetch('https://example.com/spia').then(()=>document.title='RETE!').catch(()=>{});</script>
+<table border="1"><tr><th>A</th><th>B</th></tr><tr><td>1</td><td>2</td></tr></table>
+<p><a href="https://example.com">link esterno</a></p>
+</body></html>

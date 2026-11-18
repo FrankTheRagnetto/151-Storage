@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Il cloud parla solo https. Unica eccezione: il server video sul telefono stesso. -->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false" />
+    <domain-config cleartextTrafficPermitted="true">
+        <!-- Il server video sul telefono stesso (LocalStream: solo 127.0.0.1, un nome a caso per video). Senza questa riga
+             il lettore di Android riprovava 10 volte per 30 s e poi ripiegava sullo scaricare: ogni video del Cloud
+             partiva dopo ~31 s. -->
+        <domain includeSubdomains="false">127.0.0.1</domain>
+    </domain-config>
+</network-security-config>

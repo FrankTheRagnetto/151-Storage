@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data:; font-src 'self' blob: data:; worker-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>PDF</title>
+<link rel="stylesheet" href="/assets/pdfjs/web/pdf_viewer.css">
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="pdf.css">
+</head>
+<body>
+<div id="bar"><div id="barFill"></div></div>
+<div id="viewerContainer" tabindex="0">
+  <div id="viewer" class="pdfViewer"></div>
+</div>
+<div id="thumb" aria-hidden="true"></div>
+<button id="pill" type="button" aria-label="Go to page"></button>
+<div id="msg" hidden></div>
+<script type="module" src="pdf.mjs"></script>
+</body>
+</html>

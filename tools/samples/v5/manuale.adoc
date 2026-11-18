@@ -1,0 +1,6 @@
+= Manuale
+:toc:
+
+== Installazione
+
+Scarica l'APK e *installalo*.

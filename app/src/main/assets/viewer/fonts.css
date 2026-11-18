@@ -1,0 +1,27 @@
+/* 151 Viewer — i caratteri dell'app per le pagine web (OFL, tools/fetch-fonts.sh). Archivo dice, Mono misura.
+   «JetBrains Mono» è anche il carattere del codice dentro i documenti. */
+@font-face { font-family: "Archivo"; font-weight: 400; font-display: swap; src: url("fonts/archivo_regular.woff2") format("woff2"); }
+@font-face { font-family: "Archivo"; font-weight: 500; font-display: swap; src: url("fonts/archivo_medium.woff2") format("woff2"); }
+@font-face { font-family: "Archivo"; font-weight: 600; font-display: swap; src: url("fonts/archivo_semibold.woff2") format("woff2"); }
+@font-face { font-family: "Archivo"; font-weight: 700; font-display: swap; src: url("fonts/archivo_bold.woff2") format("woff2"); }
+@font-face { font-family: "Archivo Condensed"; font-weight: 700; font-display: swap; src: url("fonts/archivo_condensed_bold.woff2") format("woff2"); }
+@font-face { font-family: "EB Garamond"; font-weight: 400; font-display: swap; src: url("fonts/garamond_regular.woff2") format("woff2"); }
+@font-face { font-family: "JetBrains Mono"; font-weight: 400; font-display: swap; src: url("fonts/mono_regular.woff2") format("woff2"); }
+@font-face { font-family: "JetBrains Mono"; font-weight: 500; font-display: swap; src: url("fonts/mono_medium.woff2") format("woff2"); }
+:root {
+  --ui: "Archivo", system-ui, sans-serif;
+  --ui-cond: "Archivo Condensed", "Archivo", system-ui, sans-serif;
+  --prose: "EB Garamond", Georgia, serif;
+  --meta: "JetBrains Mono", "Roboto Mono", ui-monospace, monospace;
+  /* il manuale: lastra, acetato, inchiostro, filo; tinte di sezione come Sections.kt / colors.xml */
+  --board: #dad2bf; --acetate: #f5f1e6; --acetate-raised: #fbf9f3; --ink: #1c1b18; --ink-muted: #5c574c;
+  --seam: #cec6b2; --vermilion: #c4321b; --vermilion-wash: #f8e4dc;
+  --h-pdf: #db5a1f; --h-word: #2b4aae; --h-excel: #3b8a37; --h-ppt: #bf3e67; --h-text: #6a3fbd;
+  --h-archive: #ebb21d; --h-other: #676a6f; --h-audio: #6c7d1c;
+}
+.theme-dark {
+  --board: #131311; --acetate: #1f1e1b; --acetate-raised: #292824; --ink: #eee9dc; --ink-muted: #ada697;
+  --seam: #36342f; --vermilion: #ff7a5e; --vermilion-wash: #3a1e17;
+  /* di notte le sezioni si abbassano: 72% tinta + 28% inchiostro (values-night/colors.xml) */
+  --h-pdf: #a3461b; --h-word: #243b82; --h-excel: #30692c; --h-ppt: #8f324f; --h-text: #52338d; --h-archive: #af851a; --h-other: #4f5255; --h-audio: #535f19;
+}
